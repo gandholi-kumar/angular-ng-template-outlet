@@ -14,10 +14,32 @@ export class ParentComponent {
   @ViewChild('tableTemplate', { static: true })
   tableTemplate: TemplateRef<HTMLElement>;
 
-  mode = DisplayOptions.LIST;
-  modeOptions = [{ mode: DisplayOptions.CARD }, { mode: DisplayOptions.LIST }, { mode: DisplayOptions.TABLE }];
-  cols = [{ field: 'header', header: 'Title' }, { field: 'content', header: 'Sub title' }];
-
+  mode = DisplayOptions.TABLE;
+  modeOptions = [
+    { mode: DisplayOptions.CARD },
+    { mode: DisplayOptions.LIST },
+    { mode: DisplayOptions.TABLE },
+  ];
+  cols = [
+    {
+      identifier: 'header',
+      header: 'Title',
+      componentType: 'textbox',
+      isEditable: false,
+    },
+    {
+      identifier: 'content',
+      header: 'Sub title',
+      componentType: 'textbox',
+      isEditable: false,
+    },
+    {
+      identifier: 'meatball',
+      header: '',
+      componentType: 'meatball',
+      isEditable: false,
+    },
+  ];
 
   items: Courses[] = [
     {
@@ -31,6 +53,10 @@ export class ParentComponent {
     {
       header: 'Entity Framework Code Tutorial',
       content: 'Learn Everything about Entity Framework Core',
+    },
+    {
+      header: 'Vue',
+      content: '',
     },
   ];
 

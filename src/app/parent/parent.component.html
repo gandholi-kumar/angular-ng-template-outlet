@@ -61,9 +61,45 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let item of items; let i = index">
-          <td *ngFor="let col of cols">{{ item[col.field] }}</td>
-        </tr>
+        <ng-container *ngFor="let item of items">
+          <tr>
+            <ng-container *ngFor="let col of cols">
+              <ng-container [ngSwitch]="col.componentType">
+                <td *ngSwitchCase="'textbox'">
+                  <ng-container *ngIf="col.isEditable; else readOnlyMode">
+                    <input type="text" [id]="col.identifier" [value]="item[col.identifier]" >
+                  </ng-container>
+                  <ng-template #readOnlyMode>
+                    <ng-container
+                      [ngTemplateOutlet]="readonlyColTemplate"
+                      [ngTemplateOutletContext]="{
+                        $implicit: item[col.identifier],
+                        identifier: col.identifier
+                      }"
+                    ></ng-container>
+                  </ng-template>
+                </td>
+                <td *ngSwitchCase="'meatball'">its meatball</td>
+                <td *ngSwitchDefault>
+                  <ng-container
+                    [ngTemplateOutlet]="readonlyColTemplate"
+                    [ngTemplateOutletContext]="{
+                      $implicit: item[col.identifier],
+                      identifier: col.identifier
+                    }"
+                  ></ng-container>
+                </td>
+                <ng-template
+                  #readonlyColTemplate
+                  let-identifier="identifier"
+                  let-rowData
+                  > 
+                  {{rowData ? rowData : '--'}}
+                </ng-template>
+              </ng-container>
+            </ng-container>
+          </tr>
+        </ng-container>
       </tbody>
     </table>
   </ng-template>
