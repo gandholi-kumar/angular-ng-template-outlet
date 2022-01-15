@@ -15,7 +15,9 @@ export class ParentComponent {
   tableTemplate: TemplateRef<HTMLElement>;
 
   mode = DisplayOptions.LIST;
-  modeOptions = [{ mode: DisplayOptions.CARD }, { mode: DisplayOptions.LIST }];
+  modeOptions = [{ mode: DisplayOptions.CARD }, { mode: DisplayOptions.LIST }, { mode: DisplayOptions.TABLE }];
+  cols = [{ field: 'header', header: 'Title' }, { field: 'content', header: 'Sub title' }];
+
 
   items: Courses[] = [
     {

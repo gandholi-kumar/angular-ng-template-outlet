@@ -55,14 +55,14 @@
   </ng-template>
 
   <ng-template let-items #tableTemplate>
-    <table style="width: 100%">
+    <table style="table">
       <thead>
-        <th *ngFor="let item of items">{{ item.header }}</th>
+        <th *ngFor="let col of cols">{{ col.header }}</th>
       </thead>
 
       <tbody>
         <tr *ngFor="let item of items; let i = index">
-          <td>{{item.content}}<td>
+          <td *ngFor="let col of cols">{{ item[col.field] }}</td>
         </tr>
       </tbody>
     </table>
