@@ -1,15 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Courses, DisplayOptions } from '../model';
 
 @Component({
   selector: 'app-parent',
   templateUrl: './parent.component.html',
-  styleUrls: ['./parent.component.css']
+  styleUrls: ['./parent.component.css'],
 })
-export class ParentComponent implements OnInit {
+export class ParentComponent {
+  @ViewChild('cardTemplate', { static: true })
+  cardTemplate: TemplateRef<HTMLElement>;
+  @ViewChild('listTemplate', { static: true })
+  listTemplate: TemplateRef<HTMLElement>;
+  @ViewChild('tableTemplate', { static: true })
+  tableTemplate: TemplateRef<HTMLElement>;
 
-  constructor() { }
+  mode = DisplayOptions.LIST;
+  modeOptions = [{ mode: DisplayOptions.CARD }, { mode: DisplayOptions.LIST }];
 
-  ngOnInit() {
+  items: Courses[] = [
+    {
+      header: 'Angular Tutorial',
+      content: 'The Angular Tutorial for Beginners & Professionals',
+    },
+    {
+      header: 'Typescript Tutorial',
+      content: 'The Complete Guide to Typescript',
+    },
+    {
+      header: 'Entity Framework Code Tutorial',
+      content: 'Learn Everything about Entity Framework Core',
+    },
+  ];
+
+  get selectedTemplate() {
+    if (this.mode === DisplayOptions.LIST) return this.listTemplate;
+    else if (this.mode === DisplayOptions.TABLE) return this.tableTemplate;
+    return this.cardTemplate;
   }
-
 }

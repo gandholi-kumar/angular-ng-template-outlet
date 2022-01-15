@@ -8,8 +8,8 @@ import { ParentComponent } from './parent/parent.component';
 import { ChildComponent } from './child/child.component';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule ],
-  declarations: [ AppComponent, HelloComponent, ParentComponent, ChildComponent ],
-  bootstrap:    [ AppComponent ]
+  imports: [BrowserModule, FormsModule],
+  declarations: [AppComponent, HelloComponent, ParentComponent, ChildComponent],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

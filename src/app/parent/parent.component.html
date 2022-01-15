@@ -1,5 +1,71 @@
-<p>
-parent works!
-</p>
+<h2>Parent</h2>
 
-<app-child>
+<section class="section-container">
+  <h3>With in same component</h3>
+  <ng-container
+    [ngTemplateOutlet]="messageTemplate"
+    [ngTemplateOutletContext]="{ $implicit: '1000' }"
+  >
+  </ng-container>
+
+  <ng-template let-value #messageTemplate>
+    <p>Value Received from the Parent is {{ value }}</p>
+  </ng-template>
+</section>
+
+<section class="section-container">
+  <h3>Passing plain template from parent to child</h3>
+  <ng-template #plainParentTemplate>
+    <p>
+      This Template is defined in Parent. We will send it to child component
+    </p>
+  </ng-template>
+  <app-child [customTemplate]="plainParentTemplate"></app-child>
+</section>
+
+<section class="section-container">
+  <h3>Content projection from parent to child</h3>
+  <app-child>
+    <p>Using content projection we are passing data from parent to child</p>
+  </app-child>
+</section>
+
+<section class="section-container">
+  <h3>Display either card or list format</h3>
+  <label for="mode">Display mode:</label>
+  <select [(ngModel)]="mode">
+    <option *ngFor="let item of modeOptions" [ngValue]="item.mode">
+      {{ item.mode }}
+    </option>
+  </select>
+
+  <ng-template let-items #cardTemplate>
+    <div *ngFor="let item of items">
+      <h2>{{ item.header }}</h2>
+      <p>{{ item.content }}</p>
+    </div>
+  </ng-template>
+
+  <ng-template let-items #listTemplate>
+    <ul>
+      <li *ngFor="let item of items">
+        <strong>{{ item.header }} </strong> ( {{ item.content }} )
+      </li>
+    </ul>
+  </ng-template>
+
+  <ng-template let-items #tableTemplate>
+    <table style="width: 100%">
+      <thead>
+        <th *ngFor="let item of items">{{ item.header }}</th>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of items; let i = index">
+          <td>{{item.content}}<td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+  <app-child [items]="items" [itemTemplate]="selectedTemplate"> </app-child>
+</section>
