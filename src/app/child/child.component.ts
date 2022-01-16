@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
-import { Courses } from '../model';
+import { TableDataConfiguration } from '../model';
 
 @Component({
   selector: 'app-child',
@@ -8,8 +8,8 @@ import { Courses } from '../model';
 })
 export class ChildComponent implements OnInit {
   @Input() customTemplate: TemplateRef<HTMLElement>;
-  @Input() itemTemplate: TemplateRef<HTMLElement>;
-  @Input() items: Courses[];
+  @Input() template: TemplateRef<HTMLElement>;
+  @Input() rowData: TableDataConfiguration[];
   constructor() {}
 
   ngOnInit() {}

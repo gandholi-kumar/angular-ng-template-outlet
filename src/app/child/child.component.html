@@ -6,6 +6,6 @@
 <ng-template [ngTemplateOutlet]="parentContentProjection"> </ng-template>
 
 <ng-container
-  [ngTemplateOutlet]="itemTemplate"
-  [ngTemplateOutletContext]="{ $implicit: items }"
+  [ngTemplateOutlet]="template"
+  [ngTemplateOutletContext]="{ $implicit: rowData }"
 ></ng-container>

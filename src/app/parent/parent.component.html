@@ -34,67 +34,78 @@
   <h3>Display either card or list format</h3>
   <label for="mode">Display mode:</label>
   <select [(ngModel)]="mode">
-    <option *ngFor="let item of modeOptions" [ngValue]="item.mode">
-      {{ item.mode }}
+    <option *ngFor="let row of modeOptions" [ngValue]="row.mode">
+      {{ row.mode }}
     </option>
   </select>
 
-  <ng-template let-items #cardTemplate>
-    <div *ngFor="let item of items">
-      <h2>{{ item.header }}</h2>
-      <p>{{ item.content }}</p>
+  <ng-template let-rowDatas #cardTemplate>
+    <div *ngFor="let row of rowDatas">
+      <h2>{{ row.header }}</h2>
+      <p>{{ row.content }}</p>
     </div>
   </ng-template>
 
-  <ng-template let-items #listTemplate>
+  <ng-template let-rowDatas #listTemplate>
     <ul>
-      <li *ngFor="let item of items">
-        <strong>{{ item.header }} </strong> ( {{ item.content }} )
+      <li *ngFor="let row of rowDatas">
+        <strong>{{ row.header }} </strong> ( {{ row.content }} )
       </li>
     </ul>
   </ng-template>
 
-  <ng-template let-items #tableTemplate>
+  <ng-template let-rowDatas #tableTemplate>
     <table style="table">
       <thead>
-        <th *ngFor="let col of cols">{{ col.header }}</th>
+        <th *ngFor="let col of cols">
+          <ng-container *ngIf="col.isVisible">
+            {{ col.label }}
+          </ng-container>
+        </th>
       </thead>
 
       <tbody>
-        <ng-container *ngFor="let item of items">
+        <ng-container *ngFor="let row of rowDatas">
           <tr>
             <ng-container *ngFor="let col of cols">
               <ng-container [ngSwitch]="col.componentType">
                 <td *ngSwitchCase="'textbox'">
-                  <ng-container *ngIf="col.isEditable; else readOnlyMode">
-                    <input type="text" [id]="col.identifier" [value]="item[col.identifier]" >
+                  <ng-container *ngIf="col.isVisible">
+                    <ng-container *ngIf="col.isEditable; else readOnlyMode">
+                      <input
+                        type="text"
+                        [id]="col.identifier"
+                        [value]="row[col.identifier]"
+                      />
+                    </ng-container>
+                    <ng-template #readOnlyMode>
+                      <ng-container
+                        [ngTemplateOutlet]="readonlyColTemplate"
+                        [ngTemplateOutletContext]="{
+                          $implicit: row[col.identifier],
+                          identifier: col.identifier
+                        }"
+                      ></ng-container>
+                    </ng-template>
                   </ng-container>
-                  <ng-template #readOnlyMode>
-                    <ng-container
-                      [ngTemplateOutlet]="readonlyColTemplate"
-                      [ngTemplateOutletContext]="{
-                        $implicit: item[col.identifier],
-                        identifier: col.identifier
-                      }"
-                    ></ng-container>
-                  </ng-template>
                 </td>
-                <td *ngSwitchCase="'meatball'">its meatball</td>
+                <td *ngSwitchCase="'options'">
+                  <ng-container *ngIf="col.isVisible">
+                    <ng-container *ngIf="row[col.identifier]">
+                      meatball
+                    </ng-container>
+                  </ng-container>
+                </td>
                 <td *ngSwitchDefault>
                   <ng-container
                     [ngTemplateOutlet]="readonlyColTemplate"
                     [ngTemplateOutletContext]="{
-                      $implicit: item[col.identifier],
-                      identifier: col.identifier
+                      $implicit: row[col.identifier]
                     }"
                   ></ng-container>
                 </td>
-                <ng-template
-                  #readonlyColTemplate
-                  let-identifier="identifier"
-                  let-rowData
-                  > 
-                  {{rowData ? rowData : '--'}}
+                <ng-template #readonlyColTemplate let-rowData>
+                  {{ rowData ? rowData : '--' }}
                 </ng-template>
               </ng-container>
             </ng-container>
@@ -103,5 +114,6 @@
       </tbody>
     </table>
   </ng-template>
-  <app-child [items]="items" [itemTemplate]="selectedTemplate"> </app-child>
+
+  <app-child [rowData]="rowDatas" [template]="selectedTemplate"> </app-child>
 </section>

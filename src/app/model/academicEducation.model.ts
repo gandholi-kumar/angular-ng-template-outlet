@@ -1,8 +1,3 @@
-export interface Courses {
-  header: string,
-  content: string
-}
-
 export interface DisplayMode {
   mode: DisplayOptions
 }

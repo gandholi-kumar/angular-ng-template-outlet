@@ -1,5 +1,11 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { Courses, DisplayOptions } from '../model';
+import {
+  DisplayMode,
+  DisplayOptions,
+  TableColumnConfiguration,
+  TableDataConfiguration,
+} from '../model';
+import { ComponentType } from '../model/dataTable.model';
 
 @Component({
   selector: 'app-parent',
@@ -15,36 +21,40 @@ export class ParentComponent {
   tableTemplate: TemplateRef<HTMLElement>;
 
   mode = DisplayOptions.TABLE;
-  modeOptions = [
+  modeOptions: DisplayMode[] = [
     { mode: DisplayOptions.CARD },
     { mode: DisplayOptions.LIST },
     { mode: DisplayOptions.TABLE },
   ];
-  cols = [
+
+  cols: TableColumnConfiguration[] = [
     {
       identifier: 'header',
-      header: 'Title',
-      componentType: 'textbox',
+      label: 'Title',
+      componentType: ComponentType.TEXTBOX,
       isEditable: false,
+      isVisible: true,
     },
     {
       identifier: 'content',
-      header: 'Sub title',
-      componentType: 'textbox',
+      label: 'Sub title',
+      componentType: ComponentType.TEXTBOX,
       isEditable: false,
+      isVisible: true,
     },
     {
-      identifier: 'meatball',
-      header: '',
-      componentType: 'meatball',
-      isEditable: false,
+      identifier: 'meatballMenu',
+      label: 'MeatBall menu',
+      componentType: ComponentType.OPTIONS,
+      isVisible: true,
     },
   ];
 
-  items: Courses[] = [
+  rowDatas: TableDataConfiguration[] = [
     {
       header: 'Angular Tutorial',
       content: 'The Angular Tutorial for Beginners & Professionals',
+      meatballMenu: true,
     },
     {
       header: 'Typescript Tutorial',
@@ -53,6 +63,7 @@ export class ParentComponent {
     {
       header: 'Entity Framework Code Tutorial',
       content: 'Learn Everything about Entity Framework Core',
+      meatballMenu: true,
     },
     {
       header: 'Vue',
@@ -61,6 +72,7 @@ export class ParentComponent {
   ];
 
   get selectedTemplate() {
+    console.log(this.mode);
     if (this.mode === DisplayOptions.LIST) return this.listTemplate;
     else if (this.mode === DisplayOptions.TABLE) return this.tableTemplate;
     return this.cardTemplate;
