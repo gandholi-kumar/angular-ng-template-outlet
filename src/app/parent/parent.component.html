@@ -31,13 +31,15 @@
 </section> -->
 
 <section class="section-container">
-  <h3>Display either card or list format</h3>
-  <label for="mode">Display mode:</label>
-  <select [(ngModel)]="mode">
-    <option *ngFor="let row of modeOptions" [ngValue]="row.mode">
-      {{ row.mode }}
-    </option>
-  </select>
+  <div class="dropdown">
+    <h3>Display either card or list format</h3>
+    <label for="mode">Display mode:</label>
+    <select [(ngModel)]="mode">
+      <option *ngFor="let row of modeOptions" [ngValue]="row.mode">
+        {{ row.mode }}
+      </option>
+    </select>
+  </div>
 
   <ng-template let-rowDatas #cardTemplate>
     <div *ngFor="let row of rowDatas">
@@ -55,7 +57,11 @@
   </ng-template>
 
   <ng-template let-rowDatas #tableTemplate>
-    <app-data-table [columns]="columns" [rowDatas]="rowDatas" (menuClick)="onMenuClick($event)"></app-data-table>
+    <app-data-table
+      [columns]="columns"
+      [rowDatas]="rowDatas"
+      (menuClick)="onMenuClick($event)"
+    ></app-data-table>
   </ng-template>
 
   <app-child [rowData]="rowDatas" [template]="selectedTemplate"> </app-child>
