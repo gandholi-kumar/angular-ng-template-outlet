@@ -55,64 +55,7 @@
   </ng-template>
 
   <ng-template let-rowDatas #tableTemplate>
-    <table style="table">
-      <thead>
-        <th *ngFor="let col of cols">
-          <ng-container *ngIf="col.isVisible">
-            {{ col.label }}
-          </ng-container>
-        </th>
-      </thead>
-
-      <tbody>
-        <ng-container *ngFor="let row of rowDatas">
-          <tr>
-            <ng-container *ngFor="let col of cols">
-              <ng-container [ngSwitch]="col.componentType">
-                <td *ngSwitchCase="'textbox'">
-                  <ng-container *ngIf="col.isVisible">
-                    <ng-container *ngIf="col.isEditable; else readOnlyMode">
-                      <input
-                        type="text"
-                        [id]="col.identifier"
-                        [value]="row[col.identifier]"
-                      />
-                    </ng-container>
-                    <ng-template #readOnlyMode>
-                      <ng-container
-                        [ngTemplateOutlet]="readonlyColTemplate"
-                        [ngTemplateOutletContext]="{
-                          $implicit: row[col.identifier],
-                          identifier: col.identifier
-                        }"
-                      ></ng-container>
-                    </ng-template>
-                  </ng-container>
-                </td>
-                <td *ngSwitchCase="'options'">
-                  <ng-container *ngIf="col.isVisible">
-                    <ng-container *ngIf="row[col.identifier]">
-                      meatball
-                    </ng-container>
-                  </ng-container>
-                </td>
-                <td *ngSwitchDefault>
-                  <ng-container
-                    [ngTemplateOutlet]="readonlyColTemplate"
-                    [ngTemplateOutletContext]="{
-                      $implicit: row[col.identifier]
-                    }"
-                  ></ng-container>
-                </td>
-                <ng-template #readonlyColTemplate let-rowData>
-                  {{ rowData ? rowData : '--' }}
-                </ng-template>
-              </ng-container>
-            </ng-container>
-          </tr>
-        </ng-container>
-      </tbody>
-    </table>
+    <app-data-table [columns]="columns" [rowDatas]="rowDatas" (menuClick)="onMenuClick($event)"></app-data-table>
   </ng-template>
 
   <app-child [rowData]="rowDatas" [template]="selectedTemplate"> </app-child>

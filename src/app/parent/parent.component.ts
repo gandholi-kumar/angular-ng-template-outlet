@@ -27,7 +27,7 @@ export class ParentComponent {
     { mode: DisplayOptions.TABLE },
   ];
 
-  cols: TableColumnConfiguration[] = [
+  columns: TableColumnConfiguration[] = [
     {
       identifier: 'header',
       label: 'Title',
@@ -54,11 +54,11 @@ export class ParentComponent {
     {
       header: 'Angular Tutorial',
       content: 'The Angular Tutorial for Beginners & Professionals',
-      meatballMenu: true,
     },
     {
       header: 'Typescript Tutorial',
       content: 'The Complete Guide to Typescript',
+      meatballMenu: true,
     },
     {
       header: 'Entity Framework Code Tutorial',
@@ -72,9 +72,13 @@ export class ParentComponent {
   ];
 
   get selectedTemplate() {
-    console.log(this.mode);
     if (this.mode === DisplayOptions.LIST) return this.listTemplate;
     else if (this.mode === DisplayOptions.TABLE) return this.tableTemplate;
     return this.cardTemplate;
+  }
+
+  public onMenuClick(rowData: TableDataConfiguration) {
+    console.log('parent menu data: ', rowData);
+    alert(JSON.stringify(rowData));
   }
 }
