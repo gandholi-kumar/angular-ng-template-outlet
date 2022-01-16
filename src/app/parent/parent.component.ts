@@ -62,7 +62,7 @@ export class ParentComponent {
       content: 'The Angular Tutorial for Beginners & Professionals',
       url: {
         label: 'google',
-        urlHref: 'www.google.com'
+        urlHref: 'https://www.google.com/'
       },
       meatballMenu: true,
     },
