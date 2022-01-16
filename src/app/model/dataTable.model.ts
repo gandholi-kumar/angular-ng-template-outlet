@@ -1,20 +1,26 @@
 export interface TableColumnConfiguration {
   identifier: string;
-  label: string
+  label: string;
   componentType: ComponentType;
   isVisible: boolean;
   isEditable?: boolean;
-  width?: number
+  width?: number;
 }
 
 export enum ComponentType {
   TEXTBOX = 'textbox',
   LINK = 'link',
-  OPTIONS = 'options'
+  OPTIONS = 'options',
 }
 
 export interface TableDataConfiguration {
   header: string;
   content: string;
-  meatballMenu?: boolean
+  meatballMenu?: boolean;
+  url?: TableURL;
+}
+
+export interface TableURL {
+  label: string,
+  urlHref: string
 }

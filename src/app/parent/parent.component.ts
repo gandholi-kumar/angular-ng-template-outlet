@@ -43,6 +43,12 @@ export class ParentComponent {
       isVisible: true,
     },
     {
+      identifier: 'url',
+      label: 'External link',
+      componentType: ComponentType.LINK,
+      isVisible: true,
+    },
+    {
       identifier: 'meatballMenu',
       label: 'MeatBall menu',
       componentType: ComponentType.OPTIONS,
@@ -54,20 +60,26 @@ export class ParentComponent {
     {
       header: 'Angular Tutorial',
       content: 'The Angular Tutorial for Beginners & Professionals',
+      url: {
+        label: 'google',
+        urlHref: 'www.google.com'
+      },
+      meatballMenu: true,
     },
     {
       header: 'Typescript Tutorial',
       content: 'The Complete Guide to Typescript',
-      meatballMenu: true,
+      
     },
     {
       header: 'Entity Framework Code Tutorial',
       content: 'Learn Everything about Entity Framework Core',
-      meatballMenu: true,
+      
     },
     {
       header: 'Vue',
       content: '',
+      meatballMenu: true,
     },
   ];
 
