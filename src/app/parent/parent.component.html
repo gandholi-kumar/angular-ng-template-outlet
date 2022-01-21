@@ -1,5 +1,73 @@
-<p>
-parent works!
-</p>
+<h2>Parent</h2>
 
-<app-child>
+<section class="section-container">
+  <h3>With in same component</h3>
+  <ng-container
+    [ngTemplateOutlet]="messageTemplate"
+    [ngTemplateOutletContext]="{ $implicit: '1000' }"
+  >
+  </ng-container>
+
+  <ng-template let-value #messageTemplate>
+    <p>Value Received from the Parent is {{ value }}</p>
+  </ng-template>
+</section>
+
+<section class="section-container">
+  <h3>Passing plain template from parent to child</h3>
+  <ng-template #plainParentTemplate>
+    <p>
+      This Template is defined in Parent. We will send it to child component
+    </p>
+  </ng-template>
+  <app-child [customTemplate]="plainParentTemplate"></app-child>
+</section>
+
+<section class="section-container">
+  <h3>Content projection from parent to child</h3>
+  <app-child>
+    <p>Using content projection we are passing data from parent to child</p>
+  </app-child>
+</section>
+
+<section class="section-container">
+  <div class="dropdown">
+    <h3>Display either card or list format</h3>
+    <label for="mode">Display mode:</label>
+    <select [(ngModel)]="mode">
+      <option *ngFor="let row of modeOptions" [ngValue]="row.mode">
+        {{ row.mode }}
+      </option>
+    </select>
+  </div>
+
+  <ng-template let-rowDatas #cardTemplate>
+    <div *ngFor="let row of rowDatas">
+      <h2>{{ row.header }}</h2>
+      <p>{{ row.content }}</p>
+    </div>
+  </ng-template>
+
+  <ng-template let-rowDatas #listTemplate>
+    <ul>
+      <li *ngFor="let row of rowDatas">
+        <strong>{{ row.header }} </strong> ( {{ row.content }} )
+      </li>
+    </ul>
+  </ng-template>
+
+  <ng-template let-rowDatas #tableTemplate>
+    <app-data-table
+      [columns]="columns"
+      [rowDatas]="rowDatas"
+      (menuClick)="onMenuClick($event)"
+    ></app-data-table>
+  </ng-template>
+
+  <ng-template #dummytemplate let-customeTemplate>
+
+    {{ customeTemplate }} testsd
+  </ng-template>
+
+  <app-child [rowData]="rowDatas" [template]="selectedTemplate"> </app-child>
+</section>
