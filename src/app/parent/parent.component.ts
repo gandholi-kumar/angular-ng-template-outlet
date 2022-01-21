@@ -1,4 +1,10 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import {
   DisplayMode,
   DisplayOptions,
@@ -19,6 +25,8 @@ export class ParentComponent {
   listTemplate: TemplateRef<HTMLElement>;
   @ViewChild('tableTemplate', { static: true })
   tableTemplate: TemplateRef<HTMLElement>;
+  @ViewChild('dummytemplate', { static: true })
+  dummytemplate: ElementRef<HTMLElement>;
 
   mode = DisplayOptions.TABLE;
   modeOptions: DisplayMode[] = [
@@ -31,7 +39,7 @@ export class ParentComponent {
     {
       identifier: 'header',
       label: 'Title',
-      componentType: ComponentType.TEXTBOX,
+      componentType: ComponentType.TEMPLATEREF,
       isEditable: false,
       isVisible: true,
     },
@@ -58,23 +66,21 @@ export class ParentComponent {
 
   rowDatas: TableDataConfiguration[] = [
     {
-      header: 'Angular Tutorial',
+      header: ' this is static template | Angular Tutorial',
       content: 'The Angular Tutorial for Beginners & Professionals',
       url: {
         label: 'google',
-        urlHref: 'https://www.google.com/'
+        urlHref: 'https://www.google.com/',
       },
       meatballMenu: true,
     },
     {
       header: 'Typescript Tutorial',
       content: 'The Complete Guide to Typescript',
-      
     },
     {
       header: 'Entity Framework Code Tutorial',
       content: 'Learn Everything about Entity Framework Core',
-      
     },
     {
       header: 'Vue',
@@ -92,5 +98,16 @@ export class ParentComponent {
   public onMenuClick(rowData: TableDataConfiguration) {
     console.log('parent menu data: ', rowData);
     alert(JSON.stringify(rowData));
+  }
+
+  ngAfterContentInit() {
+    console.log('ngAfterContentInit', this.dummytemplate);
+    this.rowDatas[0].header = this.dummytemplate;
+  }
+  ngAfterViewInit() {
+    console.log('ngAfterViewInit', this.dummytemplate);
+  }
+  ngOnChanges() {
+    console.log('ngOnChanges', this.dummytemplate);
   }
 }

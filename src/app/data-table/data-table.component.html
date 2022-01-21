@@ -46,6 +46,20 @@
                 }}</a>
               </ng-container>
             </td>
+            <td *ngSwitchCase="'templateRef'">
+              <ng-container
+                *ngIf="row[col.identifier].nativeElement; else normalRendering"
+              >
+                <span
+                  [innerHTML]="
+                    row[col.identifier].nativeElement.innerHTML | sanitizeHtml
+                  "
+                ></span>
+              </ng-container>
+              <ng-template #normalRendering>
+                {{ row[col.identifier] }}
+              </ng-template>
+            </td>
             <td *ngSwitchDefault>
               <ng-container
                 [ngTemplateOutlet]="readonlyColTemplate"

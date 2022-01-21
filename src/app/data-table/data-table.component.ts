@@ -13,7 +13,9 @@ export class DataTableComponent implements OnInit {
     new EventEmitter();
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.rowDatas);
+  }
 
   onMenuClick(rowData: TableDataConfiguration) {
     this.menuClick.emit(rowData);

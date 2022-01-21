@@ -1,3 +1,5 @@
+import { ElementRef } from '@angular/core';
+
 export interface TableColumnConfiguration {
   identifier: string;
   label: string;
@@ -11,16 +13,17 @@ export enum ComponentType {
   TEXTBOX = 'textbox',
   LINK = 'link',
   OPTIONS = 'options',
+  TEMPLATEREF = 'templateRef',
 }
 
 export interface TableDataConfiguration {
-  header: string;
+  header: string | ElementRef;
   content: string;
   meatballMenu?: boolean;
   url?: TableURL;
 }
 
 export interface TableURL {
-  label: string,
-  urlHref: string
+  label: string;
+  urlHref: string;
 }
