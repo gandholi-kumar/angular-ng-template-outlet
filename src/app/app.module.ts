@@ -11,7 +11,14 @@ import { HtmlSanitizerPipe } from './pipe/html-sanitizer.pipe';
 
 @NgModule({
   imports: [BrowserModule, FormsModule],
-  declarations: [AppComponent, HelloComponent, ParentComponent, ChildComponent, DataTableComponent, HtmlSanitizerPipe],
+  declarations: [
+    AppComponent,
+    HelloComponent,
+    ParentComponent,
+    ChildComponent,
+    DataTableComponent,
+    HtmlSanitizerPipe,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
