@@ -1,5 +1,5 @@
 <h2>Parent</h2>
-<!-- 
+
 <section class="section-container">
   <h3>With in same component</h3>
   <ng-container
@@ -28,7 +28,7 @@
   <app-child>
     <p>Using content projection we are passing data from parent to child</p>
   </app-child>
-</section> -->
+</section>
 
 <section class="section-container">
   <div class="dropdown">
@@ -64,9 +64,10 @@
     ></app-data-table>
   </ng-template>
 
+  <ng-template #dummytemplate let-customeTemplate>
+
+    {{ customeTemplate }} testsd
+  </ng-template>
+
   <app-child [rowData]="rowDatas" [template]="selectedTemplate"> </app-child>
 </section>
-
-<div #dummytemplate>
-  <p>this is static template | icon</p>
-</div>

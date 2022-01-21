@@ -14,7 +14,7 @@ export class DataTableComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    console.log(this.rowDatas);
+    console.log('DataTableComponent', this.columns);
   }
 
   onMenuClick(rowData: TableDataConfiguration) {

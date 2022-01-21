@@ -12,5 +12,8 @@ export class ChildComponent implements OnInit {
   @Input() rowData: TableDataConfiguration[];
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // console.log(this.rowData);
+    // console.log('test', this.customTemplate);
+  }
 }

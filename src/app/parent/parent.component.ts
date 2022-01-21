@@ -26,7 +26,7 @@ export class ParentComponent {
   @ViewChild('tableTemplate', { static: true })
   tableTemplate: TemplateRef<HTMLElement>;
   @ViewChild('dummytemplate', { static: true })
-  dummytemplate: ElementRef<HTMLElement>;
+  dummytemplate: TemplateRef<HTMLElement>;
 
   mode = DisplayOptions.TABLE;
   modeOptions: DisplayMode[] = [
@@ -34,60 +34,8 @@ export class ParentComponent {
     { mode: DisplayOptions.LIST },
     { mode: DisplayOptions.TABLE },
   ];
-
-  columns: TableColumnConfiguration[] = [
-    {
-      identifier: 'header',
-      label: 'Title',
-      componentType: ComponentType.TEMPLATEREF,
-      isEditable: false,
-      isVisible: true,
-    },
-    {
-      identifier: 'content',
-      label: 'Sub title',
-      componentType: ComponentType.TEXTBOX,
-      isEditable: false,
-      isVisible: true,
-    },
-    {
-      identifier: 'url',
-      label: 'External link',
-      componentType: ComponentType.LINK,
-      isVisible: true,
-    },
-    {
-      identifier: 'meatballMenu',
-      label: 'MeatBall menu',
-      componentType: ComponentType.OPTIONS,
-      isVisible: true,
-    },
-  ];
-
-  rowDatas: TableDataConfiguration[] = [
-    {
-      header: ' this is static template | Angular Tutorial',
-      content: 'The Angular Tutorial for Beginners & Professionals',
-      url: {
-        label: 'google',
-        urlHref: 'https://www.google.com/',
-      },
-      meatballMenu: true,
-    },
-    {
-      header: 'Typescript Tutorial',
-      content: 'The Complete Guide to Typescript',
-    },
-    {
-      header: 'Entity Framework Code Tutorial',
-      content: 'Learn Everything about Entity Framework Core',
-    },
-    {
-      header: 'Vue',
-      content: '',
-      meatballMenu: true,
-    },
-  ];
+  columns: TableColumnConfiguration[] = [];
+  rowDatas: TableDataConfiguration[] = [];
 
   get selectedTemplate() {
     if (this.mode === DisplayOptions.LIST) return this.listTemplate;
@@ -99,15 +47,74 @@ export class ParentComponent {
     console.log('parent menu data: ', rowData);
     alert(JSON.stringify(rowData));
   }
+  ngOnInit() {
+    this.columns = [
+      {
+        identifier: 'header',
+        label: 'Title',
+        componentType: ComponentType.TEXTBOX,
+        isEditable: false,
+        isVisible: true,
+        customCellTemplate: this.dummytemplate,
+      },
+      {
+        identifier: 'content',
+        label: 'Sub title',
+        componentType: ComponentType.TEXTBOX,
+        isEditable: false,
+        isVisible: true,
+      },
+      {
+        identifier: 'url',
+        label: 'External link',
+        componentType: ComponentType.LINK,
+        isVisible: true,
+      },
+      {
+        identifier: 'actions',
+        label: 'Actions',
+        componentType: ComponentType.OPTIONS,
+        isVisible: true,
+      },
+    ];
 
-  ngAfterContentInit() {
-    console.log('ngAfterContentInit', this.dummytemplate);
-    this.rowDatas[0].header = this.dummytemplate;
-  }
-  ngAfterViewInit() {
-    console.log('ngAfterViewInit', this.dummytemplate);
-  }
-  ngOnChanges() {
-    console.log('ngOnChanges', this.dummytemplate);
+    this.rowDatas = [
+      {
+        header: 'Angular',
+        content: 'Angular is a development platform, built on TypeScript',
+        url: {
+          label: 'Angular',
+          urlHref: 'https://angular.io/guide/what-is-angular',
+        },
+        actions: true,
+      },
+      {
+        header: 'React',
+        content: 'React is a JavaScript library for building user interfaces.',
+        url: {
+          label: 'React',
+          urlHref: 'https://reactjs.org/docs/getting-started.html',
+        },
+        actions: true,
+      },
+      {
+        header: 'Svelte',
+        content: 'Svelte converts your app into ideal JavaScript at build time',
+        url: {
+          label: 'Svelte',
+          urlHref: 'https://svelte.dev/docs',
+        },
+        actions: true,
+      },
+      {
+        header: 'Vue',
+        content: 'Vue is a progressive framework for building user interfaces',
+        url: {
+          label: 'Vue',
+          urlHref: 'https://vuejs.org/v2/guide/',
+        },
+        actions: true,
+      },
+    ];
   }
 }

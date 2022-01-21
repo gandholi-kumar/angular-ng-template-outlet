@@ -1,4 +1,4 @@
-import { ElementRef } from '@angular/core';
+import { TemplateRef } from '@angular/core';
 
 export interface TableColumnConfiguration {
   identifier: string;
@@ -7,6 +7,7 @@ export interface TableColumnConfiguration {
   isVisible: boolean;
   isEditable?: boolean;
   width?: number;
+  customCellTemplate?: TemplateRef<any>;
 }
 
 export enum ComponentType {
@@ -17,9 +18,9 @@ export enum ComponentType {
 }
 
 export interface TableDataConfiguration {
-  header: string | ElementRef;
+  header: string;
   content: string;
-  meatballMenu?: boolean;
+  actions?: boolean;
   url?: TableURL;
 }
 

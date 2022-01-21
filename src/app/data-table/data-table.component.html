@@ -14,22 +14,36 @@
           <ng-container [ngSwitch]="col.componentType">
             <td *ngSwitchCase="'textbox'">
               <ng-container *ngIf="col.isVisible">
-                <ng-container *ngIf="col.isEditable; else readOnlyMode">
-                  <input
-                    type="text"
-                    [id]="col.identifier"
-                    [value]="row[col.identifier]"
-                  />
+                <ng-container *ngIf="!col.customCellTemplate">
+                  <ng-container *ngIf="col.isEditable; else readOnlyMode">
+                    <input
+                      type="text"
+                      [id]="col.identifier"
+                      [value]="row[col.identifier]"
+                    />
+                  </ng-container>
+                  <ng-template #readOnlyMode>
+                    <ng-container
+                      [ngTemplateOutlet]="readonlyColTemplate"
+                      [ngTemplateOutletContext]="{
+                        $implicit: row[col.identifier],
+                        identifier: col.identifier
+                      }"
+                    ></ng-container>
+                  </ng-template>
                 </ng-container>
-                <ng-template #readOnlyMode>
-                  <ng-container
-                    [ngTemplateOutlet]="readonlyColTemplate"
-                    [ngTemplateOutletContext]="{
-                      $implicit: row[col.identifier],
-                      identifier: col.identifier
-                    }"
-                  ></ng-container>
-                </ng-template>
+                <!-- <ng-template
+                  *ngTemplateOutlet="
+                    col.customCellTemplate;
+                    context: { $implicit: row[col.identifier] }
+                  "
+                ></ng-template> -->
+                <ng-container
+                  [ngTemplateOutlet]="col.customCellTemplate"
+                  [ngTemplateOutletContext]="{
+                    $implicit: row[col.identifier]
+                  }"
+                ></ng-container>
               </ng-container>
             </td>
             <td *ngSwitchCase="'options'">
@@ -48,6 +62,12 @@
             </td>
             <td *ngSwitchCase="'templateRef'">
               <ng-container
+                [ngTemplateOutlet]="col.customCellTemplate"
+                [ngTemplateOutletContext]="{
+                  $implicit: row[col.identifier]
+                }"
+              ></ng-container>
+              <!-- <ng-container
                 *ngIf="row[col.identifier].nativeElement; else normalRendering"
               >
                 <span
@@ -57,8 +77,8 @@
                 ></span>
               </ng-container>
               <ng-template #normalRendering>
-                {{ row[col.identifier] }}
-              </ng-template>
+                {{ row[col.identifier] }} nonRendering
+              </ng-template> -->
             </td>
             <td *ngSwitchDefault>
               <ng-container
