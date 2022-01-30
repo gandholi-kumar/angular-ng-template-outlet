@@ -10,6 +10,7 @@ import { DataTableComponent } from './data-table/data-table.component';
 import { HtmlSanitizerPipe } from './pipe/html-sanitizer.pipe';
 
 @NgModule({
+
   imports: [BrowserModule, FormsModule],
   declarations: [
     AppComponent,
@@ -20,5 +21,4 @@ import { HtmlSanitizerPipe } from './pipe/html-sanitizer.pipe';
     HtmlSanitizerPipe,
   ],
   bootstrap: [AppComponent],
-})
-export class AppModule {}
+})export class AppModule {}

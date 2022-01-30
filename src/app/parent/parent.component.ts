@@ -9,10 +9,8 @@ import { ComponentType } from '../model/dataTable.model';
 
 @Component({
   selector: 'app-parent',
-  templateUrl: './parent.component.html',
-  styleUrls: ['./parent.component.css'],
-})
-export class ParentComponent {
+  templateUrl: './parent.component.html',  styleUrls: ['./parent.component.css'],
+})export class ParentComponent {
   @ViewChild('cardTemplate', { static: true })
   cardTemplate: TemplateRef<HTMLElement>;
   @ViewChild('listTemplate', { static: true })
@@ -23,7 +21,6 @@ export class ParentComponent {
   titleTemplate: TemplateRef<HTMLElement>;
   @ViewChild('linkTemplate', { static: true })
   linkTemplate: TemplateRef<HTMLElement>;
-
   mode = DisplayOptions.TABLE;
   modeOptions: DisplayMode[] = [
     { mode: DisplayOptions.CARD },
@@ -32,7 +29,6 @@ export class ParentComponent {
   ];
   columns: TableColumnConfiguration[] = [];
   rowDatas: TableDataConfiguration[] = [];
-
   get selectedTemplate() {
     if (this.mode === DisplayOptions.LIST) return this.listTemplate;
     else if (this.mode === DisplayOptions.TABLE) return this.tableTemplate;
@@ -44,8 +40,7 @@ export class ParentComponent {
     alert(JSON.stringify(rowData));
   }
 
-  ngOnInit() {
-    this.columns = [
+  ngOnInit() {    this.columns = [
       {
         identifier: 'header',
         label: 'Title',
@@ -112,7 +107,6 @@ export class ParentComponent {
       },
     ];
   }
-
   public getEyebrowData(input: string) {
     const value = input.toLowerCase();
     if (value.includes('ang')) {
