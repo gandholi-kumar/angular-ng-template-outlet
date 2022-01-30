@@ -1,3 +1,7 @@
-export { DisplayMode } from './academicEducation.model';
-export { DisplayOptions } from './academicEducation.model';
-export { TableColumnConfiguration, ComponentType, TableDataConfiguration } from './dataTable.model';
+export { DisplayMode } from './display-option.model';
+export { DisplayOptions } from './display-option.model';
+export {
+  TableColumnConfiguration,
+  ComponentType,
+  TableDataConfiguration,
+} from './dataTable.model';

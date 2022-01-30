@@ -1,96 +1,71 @@
 <table style="table">
   <thead>
-    <th *ngFor="let col of columns">
+    <ng-container *ngFor="let col of columns">
       <ng-container *ngIf="col.isVisible">
-        {{ col.label }}
+        <th>
+          {{ col.label }}
+        </th>
       </ng-container>
-    </th>
+    </ng-container>
   </thead>
 
   <tbody>
     <ng-container *ngFor="let row of rowDatas">
       <tr>
         <ng-container *ngFor="let col of columns">
-          <ng-container [ngSwitch]="col.componentType">
-            <td *ngSwitchCase="'textbox'">
-              <ng-container *ngIf="col.isVisible">
-                <ng-container *ngIf="!col.customCellTemplate">
-                  <ng-container *ngIf="col.isEditable; else readOnlyMode">
-                    <input
-                      type="text"
-                      [id]="col.identifier"
-                      [value]="row[col.identifier]"
-                    />
-                  </ng-container>
-                  <ng-template #readOnlyMode>
-                    <ng-container
-                      [ngTemplateOutlet]="readonlyColTemplate"
-                      [ngTemplateOutletContext]="{
-                        $implicit: row[col.identifier],
-                        identifier: col.identifier
-                      }"
-                    ></ng-container>
-                  </ng-template>
+          <ng-container *ngIf="col.isVisible">
+            <ng-container [ngSwitch]="col.componentType">
+              <td *ngSwitchCase="'textbox'">
+                <ng-container *ngIf="col.isEditable; else readOnlyMode">
+                  <input
+                    type="text"
+                    [id]="col.identifier"
+                    [value]="row[col.identifier]"
+                  />
                 </ng-container>
-                <!-- <ng-template
-                  *ngTemplateOutlet="
-                    col.customCellTemplate;
-                    context: { $implicit: row[col.identifier] }
-                  "
-                ></ng-template> -->
+                <ng-template #readOnlyMode>
+                  <ng-container
+                    [ngTemplateOutlet]="readonlyColTemplate"
+                    [ngTemplateOutletContext]="{
+                      $implicit: row[col.identifier],
+                      identifier: col.identifier
+                    }"
+                  ></ng-container>
+                </ng-template>
+              </td>
+              <td *ngSwitchCase="'options'">
+                <ng-container *ngIf="row[col.identifier]">
+                  <button (click)="onMenuClick(row)">Click Me!</button>
+                </ng-container>
+              </td>
+              <td *ngSwitchCase="'link'">
+                <ng-container *ngIf="row.url">
+                  <a [href]="row.url.urlHref" target="_blank">{{
+                    row[col.identifier].label
+                  }}</a>
+                </ng-container>
+              </td>
+              <td *ngSwitchCase="'templateRef'">
                 <ng-container
                   [ngTemplateOutlet]="col.customCellTemplate"
+                  [ngTemplateOutletContext]="{
+                    $implicit: row,
+                    column: col
+                  }"
+                ></ng-container>
+              </td>
+              <td *ngSwitchDefault>
+                <ng-container
+                  [ngTemplateOutlet]="readonlyColTemplate"
                   [ngTemplateOutletContext]="{
                     $implicit: row[col.identifier]
                   }"
                 ></ng-container>
-              </ng-container>
-            </td>
-            <td *ngSwitchCase="'options'">
-              <ng-container *ngIf="col.isVisible">
-                <ng-container *ngIf="row[col.identifier]">
-                  <button (click)="onMenuClick(row)">Click Me!</button>
-                </ng-container>
-              </ng-container>
-            </td>
-            <td *ngSwitchCase="'link'">
-              <ng-container *ngIf="col.isVisible && row.url">
-                <a [href]="row.url.urlHref" target="_blank">{{
-                  row[col.identifier].label
-                }}</a>
-              </ng-container>
-            </td>
-            <td *ngSwitchCase="'templateRef'">
-              <ng-container
-                [ngTemplateOutlet]="col.customCellTemplate"
-                [ngTemplateOutletContext]="{
-                  $implicit: row[col.identifier]
-                }"
-              ></ng-container>
-              <!-- <ng-container
-                *ngIf="row[col.identifier].nativeElement; else normalRendering"
-              >
-                <span
-                  [innerHTML]="
-                    row[col.identifier].nativeElement.innerHTML | sanitizeHtml
-                  "
-                ></span>
-              </ng-container>
-              <ng-template #normalRendering>
-                {{ row[col.identifier] }} nonRendering
-              </ng-template> -->
-            </td>
-            <td *ngSwitchDefault>
-              <ng-container
-                [ngTemplateOutlet]="readonlyColTemplate"
-                [ngTemplateOutletContext]="{
-                  $implicit: row[col.identifier]
-                }"
-              ></ng-container>
-            </td>
-            <ng-template #readonlyColTemplate let-rowData>
-              {{ rowData ? rowData : '--' }}
-            </ng-template>
+              </td>
+              <ng-template #readonlyColTemplate let-rowData>
+                {{ rowData ? rowData : '--' }}
+              </ng-template>
+            </ng-container>
           </ng-container>
         </ng-container>
       </tr>

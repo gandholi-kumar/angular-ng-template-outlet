@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import {
   DisplayMode,
   DisplayOptions,
@@ -15,19 +9,18 @@ import { ComponentType } from '../model/dataTable.model';
 
 @Component({
   selector: 'app-parent',
-  templateUrl: './parent.component.html',
-  styleUrls: ['./parent.component.css'],
-})
-export class ParentComponent {
+  templateUrl: './parent.component.html',  styleUrls: ['./parent.component.css'],
+})export class ParentComponent {
   @ViewChild('cardTemplate', { static: true })
   cardTemplate: TemplateRef<HTMLElement>;
   @ViewChild('listTemplate', { static: true })
   listTemplate: TemplateRef<HTMLElement>;
   @ViewChild('tableTemplate', { static: true })
   tableTemplate: TemplateRef<HTMLElement>;
-  @ViewChild('dummytemplate', { static: true })
-  dummytemplate: TemplateRef<HTMLElement>;
-
+  @ViewChild('titleTemplate', { static: true })
+  titleTemplate: TemplateRef<HTMLElement>;
+  @ViewChild('linkTemplate', { static: true })
+  linkTemplate: TemplateRef<HTMLElement>;
   mode = DisplayOptions.TABLE;
   modeOptions: DisplayMode[] = [
     { mode: DisplayOptions.CARD },
@@ -36,7 +29,6 @@ export class ParentComponent {
   ];
   columns: TableColumnConfiguration[] = [];
   rowDatas: TableDataConfiguration[] = [];
-
   get selectedTemplate() {
     if (this.mode === DisplayOptions.LIST) return this.listTemplate;
     else if (this.mode === DisplayOptions.TABLE) return this.tableTemplate;
@@ -47,15 +39,15 @@ export class ParentComponent {
     console.log('parent menu data: ', rowData);
     alert(JSON.stringify(rowData));
   }
-  ngOnInit() {
-    this.columns = [
+
+  ngOnInit() {    this.columns = [
       {
         identifier: 'header',
         label: 'Title',
-        componentType: ComponentType.TEXTBOX,
+        componentType: ComponentType.TEMPLATEREF,
         isEditable: false,
         isVisible: true,
-        customCellTemplate: this.dummytemplate,
+        customCellTemplate: this.titleTemplate,
       },
       {
         identifier: 'content',
@@ -67,8 +59,9 @@ export class ParentComponent {
       {
         identifier: 'url',
         label: 'External link',
-        componentType: ComponentType.LINK,
+        componentType: ComponentType.TEMPLATEREF,
         isVisible: true,
+        customCellTemplate: this.linkTemplate,
       },
       {
         identifier: 'actions',
@@ -109,12 +102,19 @@ export class ParentComponent {
       {
         header: 'Vue',
         content: 'Vue is a progressive framework for building user interfaces',
-        url: {
-          label: 'Vue',
-          urlHref: 'https://vuejs.org/v2/guide/',
-        },
+
         actions: true,
       },
     ];
+  }
+  public getEyebrowData(input: string) {
+    const value = input.toLowerCase();
+    if (value.includes('ang')) {
+      return 'This is angular';
+    } else if (value.includes('rea')) {
+      return 'This is react';
+    } else {
+      return 'We are developing';
+    }
   }
 }
