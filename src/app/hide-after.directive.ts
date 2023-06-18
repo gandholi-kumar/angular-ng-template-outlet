@@ -10,9 +10,11 @@ import {
   selector: '[appHideAfter]',
 })
 export class HideAfterDirective implements OnInit {
-
-  @Input('appHideAfter') 
+  @Input('appHideAfter')
   delay: number;
+
+  @Input('appHideAfterElse')
+  defaultTemplate: TemplateRef<any> | null = null;
 
   constructor(
     private templateRef: TemplateRef<any>,
@@ -23,6 +25,9 @@ export class HideAfterDirective implements OnInit {
 
     setTimeout(() => {
       this.viewContainerRef.clear();
+      if (this.templateRef === null) {
+        this.viewContainerRef.createEmbeddedView(this.defaultTemplate);
+      }
     }, this.delay);
   }
 }

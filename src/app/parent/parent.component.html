@@ -10,12 +10,15 @@
   </ng-template>
 </section>
 
-<section *appHideAfter="10" class="section-container">
+<section *appHideAfter="5000; else defaultTemplate" class="section-container">
   <h3>Passing plain template from parent to child</h3>
   <ng-template #plainParentTemplate>
     <p>
       This Template is defined in Parent. We will send it to child component
     </p>
+  </ng-template>
+  <ng-template #defaultTemplate>
+      This is default template!!!!!!!!
   </ng-template>
   <app-child [customTemplate]="plainParentTemplate"></app-child>
 </section>
