@@ -8,9 +8,9 @@ import { ParentComponent } from './parent/parent.component';
 import { ChildComponent } from './child/child.component';
 import { DataTableComponent } from './data-table/data-table.component';
 import { HtmlSanitizerPipe } from './pipe/html-sanitizer.pipe';
+import { HideAfterDirective } from './hide-after.directive';
 
 @NgModule({
-
   imports: [BrowserModule, FormsModule],
   declarations: [
     AppComponent,
@@ -19,6 +19,8 @@ import { HtmlSanitizerPipe } from './pipe/html-sanitizer.pipe';
     ChildComponent,
     DataTableComponent,
     HtmlSanitizerPipe,
+    HideAfterDirective,
   ],
   bootstrap: [AppComponent],
-})export class AppModule {}
+})
+export class AppModule {}
