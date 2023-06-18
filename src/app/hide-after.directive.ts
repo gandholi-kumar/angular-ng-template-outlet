@@ -25,7 +25,7 @@ export class HideAfterDirective implements OnInit {
 
     setTimeout(() => {
       this.viewContainerRef.clear();
-      if (this.templateRef === null) {
+      if (this.defaultTemplate) {
         this.viewContainerRef.createEmbeddedView(this.defaultTemplate);
       }
     }, this.delay);
