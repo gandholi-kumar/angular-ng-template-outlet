@@ -1,5 +1,6 @@
 import {
   Directive,
+  Input,
   OnInit,
   TemplateRef,
   ViewContainerRef,
@@ -9,6 +10,10 @@ import {
   selector: '[appHideAfter]',
 })
 export class HideAfterDirective implements OnInit {
+
+  @Input('appHideAfter') 
+  delay: number;
+
   constructor(
     private templateRef: TemplateRef<any>,
     private viewContainerRef: ViewContainerRef
@@ -18,6 +23,6 @@ export class HideAfterDirective implements OnInit {
 
     setTimeout(() => {
       this.viewContainerRef.clear();
-    }, 5000);
+    }, this.delay);
   }
 }
