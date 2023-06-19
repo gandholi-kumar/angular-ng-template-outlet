@@ -7,5 +7,5 @@
 
 <ng-container
   [ngTemplateOutlet]="template"
-  [ngTemplateOutletContext]="{ $implicit: rowData }"
+  [ngTemplateOutletContext]="{ $implicit: rowData, 'idx': '123'}"
 ></ng-container>

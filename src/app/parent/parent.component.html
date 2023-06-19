@@ -45,7 +45,8 @@
     </div>
   </ng-template>
 
-  <ng-template let-rowDatas #listTemplate>
+  <ng-template let-rowDatas let-idx="idx" #listTemplate>
+    index: {{ idx }}
     <ul>
       <li *ngFor="let row of rowDatas">
         <strong>{{ row.header }} </strong> ( {{ row.content }} )
@@ -61,12 +62,9 @@
     ></app-data-table>
   </ng-template>
 
-
   <!-- custom cell template for Column "Title" -->
   <ng-template let-accountTextCellData let-column="column" #titleTemplate>
-    <div>
-      {{ getEyebrowData(accountTextCellData[column.identifier]) }} | 
-    </div>
+    <div>{{ getEyebrowData(accountTextCellData[column.identifier]) }} |</div>
     <div [ngStyle]="{ 'font-weight': 'bold' }">
       {{ accountTextCellData[column.identifier] }} tested
     </div>
